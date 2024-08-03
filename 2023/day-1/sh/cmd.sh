@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/sbin/busybox sh
 ##
 # Usage: cat input.txt | ./cmd.sh
 ##
