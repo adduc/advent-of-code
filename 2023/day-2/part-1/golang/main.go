@@ -13,12 +13,15 @@ func main() {
 	// using bufio to read input, print result
 	reader := bufio.NewReader(os.Stdin)
 
-	red_threshold := 12
-	green_threshold := 13
-	blue_threshold := 14
+	thresholds := map[string]int{
+		"red":   12,
+		"green": 13,
+		"blue":  14,
+	}
 
 	sum := 0
 
+outer:
 	for {
 		line, err := reader.ReadString('\n')
 		if err != nil {
@@ -30,7 +33,11 @@ func main() {
 		fmt.Sscanf(line, "Game %d:", &gameID)
 
 		// Parse out each color listed
-		var red, green, blue int
+		colors := map[string]int{
+			"red":   0,
+			"green": 0,
+			"blue":  0,
+		}
 
 		// using regex, we can parse out the colors
 		regex := regexp.MustCompile(`\d+ (red|green|blue)`)
@@ -42,20 +49,17 @@ func main() {
 			color := ""
 			fmt.Sscanf(match[0], "%d %s", &count, &color)
 
-			switch color {
-			case "red":
-				red = max(red, count)
-			case "green":
-				green = max(green, count)
-			case "blue":
-				blue = max(blue, count)
-			}
+			colors[color] = max(colors[color], count)
 		}
 
 		// if colors are less than or equal to threshold, add to sum
-		if red <= red_threshold && green <= green_threshold && blue <= blue_threshold {
-			sum += gameID
+		for color, count := range colors {
+			if count > thresholds[color] {
+				continue outer
+			}
 		}
+
+		sum += gameID
 	}
 
 	// print sum
