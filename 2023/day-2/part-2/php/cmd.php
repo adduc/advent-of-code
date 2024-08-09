@@ -1,7 +1,6 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
 
-$thresholds = ["red" => 12, "green" => 13, "blue" => 14];
 $regex = '/(?<count>\d+) (?<color>\w+)/m';
 $sum = 0;
 
