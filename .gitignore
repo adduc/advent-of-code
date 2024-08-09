@@ -1,6 +1,8 @@
 # rust binaries
 main
+rust/target
 
 # test inputs
 sample.txt
 test.txt
+
